@@ -1,0 +1,14 @@
+{% extends "entregas/base.html" %}
+
+{% block titulo %}Nuevo pedido{% endblock %}
+
+{% block contenido %}
+<h2>Registrar un pedido</h2>
+<form method="post" action="/pedidos">
+    {% csrf_token %}
+    <label>Origen: <input type="text" name="origen" required></label><br>
+    <label>Destino: <input type="text" name="destino" required></label><br>
+    <label>Peso (kg): <input type="number" name="peso_kg" step="0.01" required></label><br>
+    <button type="submit">Crear pedido</button>
+</form>
+{% endblock %}

@@ -1,0 +1,22 @@
+Rodrigo Vega Espinoza
+
+| # | Inconveniente | Qué ya trae Django | Qué escribimos nosotros | Qué no copiamos del libro |
+|---|---|---|---|---|
+| 1 | Cada trámite copia la sesión, la bitácora y el encabezado. Si cambia el token hay que tocar 40 archivos. | Una sola entrada (el handler + `urls.py`), `MIDDLEWARE` para sesión y autenticación, `@login_required`, `base.html` con `{% extends %}`. | Configurar la sesión una vez en `settings.py` y, si hace falta, un middleware de bitácora. | Un Front Controller propio ni una cadena de clases al lado del middleware. |
+| 2 | Un `switch` de 200 líneas para los medios, y cada IA responde en su propio formato (`route_hint`, XML…). | Nada, es lógica nuestra. Solo `choices` en el modelo para guardar el medio. | Una clase o función por medio (Strategy), una función que crea el medio, y un adaptador por IA que regresa `Sugerencia(medio, motivo)`. | Abstract Factory ni Factory Method con herencia si solo cambia un texto. |
+| 3 | La plantilla del seguimiento hace SQL y el reporte repite las mismas consultas. | Plantillas (no tienen SQL) y el ORM. | Una función `consultar_seguimiento(folio)` que usen el seguimiento y el reporte, y que le pase a la plantilla datos ya listos. | Un Repository encima del ORM solo por tenerlo. El modelo de Django ya es Active Record. |
+| 4 | El cobro, el alta, el correo y el aviso van en un mismo script. Si falla el correo no hay envío, y dos clics hacen dos cobros. | `transaction.atomic`, `transaction.on_commit` y `redirect()`. | Cobro y alta dentro de `atomic`; correo y aviso en `on_commit`; una clave única por cobro para que no se repita; después del POST, redirigir al seguimiento. | Un Observer que reemplace la transacción, ni un sistema de eventos propio. |
+| 5 | La app quiere JSON corto y el panel quiere HTML con mapa. La app hace 12 peticiones para su inicio. | `JsonResponse` y `render`. | La misma consulta con dos salidas: la vista HTML del panel y un endpoint JSON para el inicio de la app. | Un API Gateway ni microservicios. |
+| 6 | Si el mapa o la IA se caen, no se puede ver ni un pedido ya guardado. | Nada de esto, solo la caché. | Que el seguimiento lea solo de la base. Poner timeout a las llamadas externas y mostrar "no disponible" si fallan. Reintentar solo errores temporales. | Reintentar el cobro, ni meter herramientas pesadas de resiliencia. |
+| 7 | Proponen Event Sourcing, CQRS y Redux para generar un PDF. | `@login_required`, `get_object_or_404` y `FileResponse`. | Una vista que revisa la sesión, busca el pedido y genera el PDF. | Ninguno. No hace falta nada de eso. |
+
+## Preguntas
+
+**¿`urls.py` es Front Controller, Page Controller o el camino hacia los dos?**
+Es el camino hacia los dos. El Front Controller es la entrada de Django, que pasa por el middleware y luego usa `urls.py`. `urls.py` solo dice a qué vista va cada ruta, y cada vista es el Page Controller de su trámite.
+
+**¿La plantilla Jinja/Django puede hacer SELECT?**
+No puede escribir SQL. Pero si le pasas un QuerySet o un objeto con relaciones, al recorrerlo sí se ejecutan consultas sin que se vea.
+
+**¿Por qué sí o por qué no?**
+Por eso la vista le debe pasar a la plantilla datos ya listos, como listas o diccionarios. Así la plantilla solo muestra y no consulta nada.

@@ -1,0 +1,15 @@
+{% extends "entregas/base.html" %}
+
+{% block titulo %}Seguimiento de pedido{% endblock %}
+
+{% block contenido %}
+<h2>Seguimiento</h2>
+<p>Folio: {{ folio }}</p>
+<p>Estado: {{ estado }}</p>
+<p>ETA: {{ eta }}</p>
+<p>Medio: {{ medio }}</p>
+<p>Motivo: {{ motivo }}</p>
+<div style="border:1px solid #999; width:200px; height:120px;">
+    Mapa (lat: {{ lat }}, lng: {{ lng }})
+</div>
+{% endblock %}

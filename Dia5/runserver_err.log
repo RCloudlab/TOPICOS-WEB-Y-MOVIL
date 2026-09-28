@@ -1,0 +1,6 @@
+[28/Sep/2026 00:24:34] "GET /pedidos/nuevo HTTP/1.1" 200 753
+[28/Sep/2026 00:24:41] "GET /pedidos/nuevo HTTP/1.1" 200 753
+[28/Sep/2026 00:24:41] "POST /pedidos HTTP/1.1" 303 0
+[28/Sep/2026 00:24:47] "GET /pedidos/1 HTTP/1.1" 200 436
+[28/Sep/2026 00:24:47] "GET /api/pedidos/1 HTTP/1.1" 200 49
+[28/Sep/2026 00:24:47] "GET /api/inicio HTTP/1.1" 200 64

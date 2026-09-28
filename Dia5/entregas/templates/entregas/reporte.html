@@ -1,0 +1,25 @@
+{% extends "entregas/base.html" %}
+
+{% block titulo %}Reporte de pedidos{% endblock %}
+
+{% block contenido %}
+<h2>Reporte</h2>
+<table border="1" cellpadding="4">
+    <tr>
+        <th>Folio</th>
+        <th>Estado</th>
+        <th>Medio</th>
+        <th>Motivo</th>
+        <th>ETA</th>
+    </tr>
+    {% for pedido in pedidos %}
+    <tr>
+        <td>{{ pedido.folio }}</td>
+        <td>{{ pedido.estado }}</td>
+        <td>{{ pedido.medio }}</td>
+        <td>{{ pedido.motivo }}</td>
+        <td>{{ pedido.eta }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

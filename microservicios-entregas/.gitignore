@@ -1,0 +1,4 @@
+# El Random Forest pesa ~51 MB (GitHub avisa arriba de 50 MB).
+# Se copia a mano desde plataforma-entregas/entregas/modelo/ (ver README).
+recomendar/ia/modelo/modelo_bosque.joblib
+__pycache__/

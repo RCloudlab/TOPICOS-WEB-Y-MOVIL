@@ -1,0 +1,6 @@
+$ curl -s localhost:8080/salud/pedidos
+{"ok":true,"recomendar_url":"http://recomendar:5001","servicio":"pedidos"}
+
+$ curl -s localhost:8080/salud/recomendar
+{"modelos":[{"archivo":"modelo_medios.joblib","id":"arbol","listo":true,"nombre":"\u00c1rbol de decisi\u00f3n"},{"archivo":"modelo_bosque.joblib","id":"bosque","listo":true,"nombre":"Random Forest"},{"archivo":"modelo_red.joblib","id":"red","listo":true,"nombre":"Red neuronal (MLP)"}],"ok":true,"servicio":"recomendar"}
+

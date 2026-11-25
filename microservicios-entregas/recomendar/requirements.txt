@@ -1,0 +1,7 @@
+flask==3.1.2
+gunicorn==23.0.0
+# La versión de scikit-learn debe ser la misma con la que se entrenaron los .joblib
+scikit-learn==1.9.0
+pandas==3.0.6
+numpy==2.5.4
+joblib==1.6.0

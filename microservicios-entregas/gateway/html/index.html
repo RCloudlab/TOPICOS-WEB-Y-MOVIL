@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Entregas · microservicios</title>
+<style>
+  :root { --fondo:#f6f7f9; --tarjeta:#fff; --texto:#1d2330; --tenue:#667085; --borde:#d9dde5; --acento:#1f6feb; --ok:#1a7f37; --aviso:#b35900; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: system-ui, sans-serif; background:var(--fondo); color:var(--texto); }
+  main { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+  h1 { font-size: 1.4rem; margin: 0 0 4px; }
+  p.sub { color: var(--tenue); margin: 0 0 20px; }
+  form, .resultado { background: var(--tarjeta); border:1px solid var(--borde); border-radius: 10px; padding: 16px; }
+  .rejilla { display:grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+  label { display:flex; flex-direction:column; font-size:.85rem; color:var(--tenue); gap:4px; }
+  input, select { font: inherit; padding: 6px 8px; border:1px solid var(--borde); border-radius:6px; color:var(--texto); background:#fff; }
+  .acciones { display:flex; gap:12px; align-items:center; margin-top:16px; flex-wrap:wrap; }
+  button { font: inherit; padding: 8px 16px; border:0; border-radius:6px; background:var(--acento); color:#fff; cursor:pointer; }
+  .resultado { margin-top: 16px; }
+  .medio { font-size: 1.6rem; font-weight: 700; }
+  .ok { color: var(--ok); } .aviso { color: var(--aviso); }
+  table { border-collapse: collapse; width: 100%; margin-top: 8px; font-size:.9rem; }
+  td, th { text-align:left; padding: 4px 8px; border-bottom: 1px solid var(--borde); }
+  pre { background:#f0f2f5; padding: 10px; border-radius: 6px; overflow:auto; font-size:.8rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Plataforma de entregas</h1>
+  <p class="sub">Gateway → <code>pedidos</code> → <code>recomendar</code>. Esta página no llama a Django.</p>
+
+  <form id="forma">
+    <div class="rejilla">
+      <label>Modelo
+        <select name="modelo">
+          <option value="arbol">Árbol de decisión</option>
+          <option value="bosque">Random Forest</option>
+          <option value="red">Red neuronal (MLP)</option>
+        </select>
+      </label>
+      <label>Distancia (km)<input name="distancia_km" type="number" step="0.01" value="12.64"></label>
+      <label>Peso (kg)<input name="peso_kg" type="number" step="0.01" value="0.31"></label>
+      <label>Largo (cm)<input name="largo_cm" type="number" step="0.1" value="11.7"></label>
+      <label>Ancho (cm)<input name="ancho_cm" type="number" step="0.1" value="7.6"></label>
+      <label>Alto (cm)<input name="alto_cm" type="number" step="0.1" value="10.6"></label>
+      <label>Volumen (L)<input name="volumen_l" type="number" step="0.01" value="0.94"></label>
+      <label>Valor declarado (MXN)<input name="valor_declarado_mxn" type="number" step="0.01" value="4603"></label>
+      <label>Hora de salida<input name="hora_salida" type="number" min="0" max="23" value="3"></label>
+      <label>Frágil<select name="fragil"><option value="0">No</option><option value="1">Sí</option></select></label>
+      <label>Refrigerado<select name="refrigerado"><option value="0">No</option><option value="1">Sí</option></select></label>
+      <label>Prioridad<select name="prioridad"><option>mismo_dia</option><option>express</option><option>estandar</option></select></label>
+      <label>Zona<select name="zona_destino"><option>periferia</option><option>centro</option><option>residencial</option><option>rural</option></select></label>
+      <label>Clima<select name="clima"><option>despejado</option><option>lluvia</option><option>viento_fuerte</option></select></label>
+      <label>Tráfico<select name="trafico"><option>medio</option><option>bajo</option><option>alto</option></select></label>
+    </div>
+    <div class="acciones">
+      <button type="submit">Crear pedido</button>
+      <span id="estado-servicios" class="sub"></span>
+    </div>
+  </form>
+
+  <section class="resultado" id="resultado" hidden></section>
+</main>
+
+<script>
+const forma = document.getElementById("forma");
+const caja = document.getElementById("resultado");
+
+async function revisarSalud() {
+  const partes = [];
+  for (const s of ["pedidos", "recomendar"]) {
+    try { const r = await fetch(`/salud/${s}`); partes.push(`${s}: ${r.ok ? "✔" : "✖ " + r.status}`); }
+    catch { partes.push(`${s}: ✖`); }
+  }
+  document.getElementById("estado-servicios").textContent = partes.join("  ·  ");
+}
+
+forma.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const datos = Object.fromEntries(new FormData(forma));
+  caja.hidden = false;
+  caja.textContent = "Enviando…";
+  try {
+    const r = await fetch("/pedidos", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(datos) });
+    const p = await r.json();
+    caja.innerHTML = "";
+    const titulo = document.createElement("div");
+    if (p.medio) {
+      titulo.innerHTML = `<div>Folio <b>${p.folio}</b> · HTTP ${r.status}</div><div class="medio ok">${p.medio}</div><div>${p.motivo}</div>`;
+      if (p.plan) titulo.innerHTML += `<div class="sub">Plan: ${p.plan.minutos} min · ${p.plan.indicacion}</div>`;
+      const filas = p.ranking.map(x => `<tr><td>${x.medio}</td><td>${(x.confianza*100).toFixed(1)}%</td><td>${p.descartados.some(d => d.medio === x.medio) ? "descartado por reglas" : ""}</td></tr>`).join("");
+      titulo.innerHTML += `<table><tr><th>Medio</th><th>Confianza</th><th></th></tr>${filas}</table>`;
+    } else {
+      titulo.innerHTML = `<div>Folio <b>${p.folio ?? "—"}</b> · HTTP ${r.status}</div><div class="medio aviso">${p.estado ?? "error"}</div><div>${p.aviso ?? JSON.stringify(p.error)}</div>`;
+    }
+    const crudo = document.createElement("pre");
+    crudo.textContent = JSON.stringify(p, null, 2);
+    caja.append(titulo, crudo);
+  } catch (err) {
+    caja.textContent = "No se pudo contactar al gateway: " + err;
+  }
+  revisarSalud();
+});
+
+revisarSalud();
+</script>
+</body>
+</html>

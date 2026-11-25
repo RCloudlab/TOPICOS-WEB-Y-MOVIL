@@ -1,0 +1,24 @@
+services:
+  recomendar:
+    build: ./recomendar
+    restart: unless-stopped
+
+  pedidos:
+    build: ./pedidos
+    environment:
+      RECOMENDAR_URL: http://recomendar:5001
+      RECOMENDAR_TIMEOUT: "3"
+    depends_on:
+      - recomendar
+    restart: unless-stopped
+
+  gateway:
+    image: nginx:1.27-alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./gateway/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./gateway/html:/usr/share/nginx/html:ro
+    depends_on:
+      - pedidos
+      - recomendar

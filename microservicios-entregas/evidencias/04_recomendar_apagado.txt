@@ -1,0 +1,42 @@
+$ docker compose stop recomendar
+ Container microservicios-entregas-recomendar-1 Stopping 
+ Container microservicios-entregas-recomendar-1 Stopped 
+$ docker compose ps
+NAME                                IMAGE                             COMMAND                  SERVICE   CREATED          STATUS          PORTS
+microservicios-entregas-gateway-1   nginx:1.27-alpine                 "/docker-entrypoint.…"   gateway   21 seconds ago   Up 20 seconds   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp
+microservicios-entregas-pedidos-1   microservicios-entregas-pedidos   "gunicorn -b 0.0.0.0…"   pedidos   21 seconds ago   Up 20 seconds   5000/tcp
+$ curl localhost:8080/salud/recomendar
+r><center>nginx/1.27.5</center>
+</body>
+</html>
+ HTTP 504
+$ curl -X POST localhost:8080/pedidos (paquete hora 3, arbol)
+{"aviso":"recomendar no disponible (ConnectionError); el pedido qued\u00f3 registrado sin medio","creado":"2026-11-25T03:47:10","estado":"pendiente_de_medio","folio":"PED-00004","medio":null,"paquete":{"alto_cm":10.6,"ancho_cm":7.6,"clima":"despejado","distancia_km":12.64,"fragil":0,"hora_salida":3,"largo_cm":11.7,"peso_kg":0.31,"prioridad":"mismo_dia","refrigerado":0,"trafico":"medio","valor_declarado_mxn":4603,"volumen_l":0.94,"zona_destino":"periferia"}}
+
+HTTP 202  tiempo 7.846480s
+$ curl localhost:8080/salud/pedidos
+{"ok":true,"recomendar_url":"http://recomendar:5001","servicio":"pedidos"}
+ HTTP 200
+$ curl localhost:8080/pedidos/PED-00002  (pedido viejo)
+"folio":"PED-00002"
+"medio":"moto"
+"medio":"moto"
+"medio":"moto"
+"medio":"dron"
+"medio":"camioneta"
+"medio":"bicicleta"
+HTTP 200
+$ docker compose start recomendar
+ Container microservicios-entregas-recomendar-1 Starting 
+ Container microservicios-entregas-recomendar-1 Started 
+$ curl -X POST localhost:8080/pedidos (de nuevo)
+"medio":"dron"
+"estado":"registrado"
+"folio":"PED-00005"
+"medio":"moto"
+"medio":"moto"
+"medio":"dron"
+"medio":"moto"
+"medio":"camioneta"
+"medio":"bicicleta"
+HTTP 201

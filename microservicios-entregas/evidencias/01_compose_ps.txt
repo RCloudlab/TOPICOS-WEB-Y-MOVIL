@@ -1,0 +1,5 @@
+$ docker compose ps
+NAME                                   IMAGE                                COMMAND                  SERVICE      CREATED          STATUS         PORTS
+microservicios-entregas-gateway-1      nginx:1.27-alpine                    "/docker-entrypoint.…"   gateway      10 seconds ago   Up 8 seconds   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp
+microservicios-entregas-pedidos-1      microservicios-entregas-pedidos      "gunicorn -b 0.0.0.0…"   pedidos      10 seconds ago   Up 9 seconds   5000/tcp
+microservicios-entregas-recomendar-1   microservicios-entregas-recomendar   "gunicorn -b 0.0.0.0…"   recomendar   10 seconds ago   Up 9 seconds   5001/tcp

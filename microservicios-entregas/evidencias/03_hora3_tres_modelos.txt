@@ -1,0 +1,17 @@
+$ curl -s -X POST localhost:8080/pedidos -H 'Content-Type: application/json' -d (paquete.json + "modelo":"arbol")
+{"corregido_por_reglas":true,"creado":"2026-11-25T03:45:59","descartados":[{"confianza":0.841,"medio":"dron","razon":"las reglas del negocio lo marcan como imposible"}],"estado":"registrado","folio":"PED-00001","medio":"moto","modelo":"arbol","motivo":"\u00e1rbol de decisi\u00f3n, confianza 13%; se descart\u00f3 dron por las reglas del negocio","paquete":{"alto_cm":10.6,"ancho_cm":7.6,"clima":"despejado","distancia_km":12.64,"fragil":0,"hora_salida":3,"largo_cm":11.7,"modelo":"arbol","peso_kg":0.31,"prioridad":"mismo_dia","refrigerado":0,"trafico":"medio","valor_declarado_mxn":4603,"volumen_l":0.94,"zona_destino":"periferia"},"plan":{"indicacion":"ruta por avenidas","medio":"moto","minutos":22},"ranking":[{"confianza":0.841,"medio":"dron"},{"confianza":0.131,"medio":"moto"},{"confianza":0.028,"medio":"camioneta"},{"confianza":0.0,"medio":"bicicleta"}]}
+
+HTTP 201
+
+$ curl -s -X POST localhost:8080/pedidos -H 'Content-Type: application/json' -d (paquete.json + "modelo":"bosque")
+{"corregido_por_reglas":false,"creado":"2026-11-25T03:46:00","descartados":[],"estado":"registrado","folio":"PED-00002","medio":"moto","modelo":"bosque","motivo":"random forest, confianza 81%","paquete":{"alto_cm":10.6,"ancho_cm":7.6,"clima":"despejado","distancia_km":12.64,"fragil":0,"hora_salida":3,"largo_cm":11.7,"modelo":"bosque","peso_kg":0.31,"prioridad":"mismo_dia","refrigerado":0,"trafico":"medio","valor_declarado_mxn":4603,"volumen_l":0.94,"zona_destino":"periferia"},"plan":{"indicacion":"ruta por avenidas","medio":"moto","minutos":22},"ranking":[{"confianza":0.81,"medio":"moto"},{"confianza":0.173,"medio":"dron"},{"confianza":0.013,"medio":"camioneta"},{"confianza":0.003,"medio":"bicicleta"}]}
+
+HTTP 201
+
+$ curl -s -X POST localhost:8080/pedidos -H 'Content-Type: application/json' -d (paquete.json + "modelo":"red")
+{"corregido_por_reglas":false,"creado":"2026-11-25T03:46:00","descartados":[],"estado":"registrado","folio":"PED-00003","medio":"moto","modelo":"red","motivo":"red neuronal, confianza 98%","paquete":{"alto_cm":10.6,"ancho_cm":7.6,"clima":"despejado","distancia_km":12.64,"fragil":0,"hora_salida":3,"largo_cm":11.7,"modelo":"red","peso_kg":0.31,"prioridad":"mismo_dia","refrigerado":0,"trafico":"medio","valor_declarado_mxn":4603,"volumen_l":0.94,"zona_destino":"periferia"},"plan":{"indicacion":"ruta por avenidas","medio":"moto","minutos":22},"ranking":[{"confianza":0.983,"medio":"moto"},{"confianza":0.016,"medio":"dron"},{"confianza":0.001,"medio":"camioneta"},{"confianza":0.0,"medio":"bicicleta"}]}
+
+HTTP 201
+
+$ curl -s localhost:8080/pedidos/PED-00001
+{"corregido_por_reglas":true,"creado":"2026-11-25T03:45:59","descartados":[{"confianza":0.841,"medio":"dron","razon":"las reglas del negocio lo marcan como imposible"}],"estado":"registrado","folio":"PED-00001","medio":"moto","modelo":"arbol","motivo":"\u00e1rbol de decisi\u00f3n, confianza 13%; se 

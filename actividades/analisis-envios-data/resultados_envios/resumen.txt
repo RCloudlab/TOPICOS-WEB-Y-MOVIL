@@ -1,0 +1,106 @@
+=== CALIDAD DE DATOS ===
+envios1: 10000 filas | nulos=0 | ids ENV-000001 .. ENV-010000 | filas duplicadas dentro=0
+envios2: 10000 filas | nulos=0 | ids ENV-000001 .. ENV-010000 | filas duplicadas dentro=0
+envios3: 10000 filas | nulos=0 | ids ENV-000001 .. ENV-010000 | filas duplicadas dentro=0
+envios4: 10000 filas | nulos=0 | ids ENV-000001 .. ENV-010000 | filas duplicadas dentro=0
+envios5: 10000 filas | nulos=0 | ids ENV-000001 .. ENV-010000 | filas duplicadas dentro=0
+envios6: 10000 filas | nulos=0 | ids ENV-000001 .. ENV-010000 | filas duplicadas dentro=0
+
+IDs que aparecen en más de una fila (todos los archivos): 60000
+Registros idénticos (ignorando id) repetidos entre archivos: 0
+
+IDs compartidos entre archivos:
+         envios1  envios2  envios3  envios4  envios5  envios6
+envios1    10000    10000    10000    10000    10000    10000
+envios2    10000    10000    10000    10000    10000    10000
+envios3    10000    10000    10000    10000    10000    10000
+envios4    10000    10000    10000    10000    10000    10000
+envios5    10000    10000    10000    10000    10000    10000
+envios6    10000    10000    10000    10000    10000    10000
+
+Filas donde volumen_l no cuadra con largo*ancho*alto (>0.5 L): 0
+Valores declarados atípicos (> 6,130 MXN): 2664 | máximo 80,000.00
+
+=== ¿QUÉ TAN MEZCLADOS / PARECIDOS SON LOS ARCHIVOS? ===
+Proporción de cada medio por archivo:
+medio_recomendado  bicicleta  dron  moto  camioneta  eskuter
+archivo                                                     
+envios1                 25.0  25.0  25.0       25.0      0.0
+envios2                 26.2   8.6  34.7       14.4     16.2
+envios3                  7.7   2.8  73.7       15.8      0.0
+envios4                 18.8   7.1  57.2       16.9      0.0
+envios5                 28.0   9.5  45.8       16.8      0.0
+envios6                  4.2   0.7  63.1       32.0      0.0
+
+KS de cada archivo contra el resto (≈0.00-0.03 = misma distribución; >0.10 = distinto):
+         distancia_km  peso_kg  largo_cm  ancho_cm  alto_cm  volumen_l  valor_declarado_mxn  hora_salida
+envios1         0.055    0.124     0.104     0.199    0.185      0.185                0.018        0.135
+envios2         0.221    0.169     0.083     0.053    0.055      0.047                0.015        0.078
+envios3         0.162    0.041     0.008     0.065    0.059      0.049                0.008        0.140
+envios4         0.071    0.183     0.011     0.051    0.049      0.041                0.009        0.068
+envios5         0.210    0.184     0.007     0.062    0.056      0.048                0.008        0.072
+envios6         0.337    0.467     0.011     0.064    0.065      0.052                0.012        0.180
+
+Orden de filas (rachas de la misma clase; barajado ≈ 1.4, ordenado >> 10):
+  envios1: longitud media de racha = 1.32
+  envios2: longitud media de racha = 1.32
+  envios3: longitud media de racha = 2.32
+  envios4: longitud media de racha = 1.67
+  envios5: longitud media de racha = 1.48
+  envios6: longitud media de racha = 2.02
+
+=== PERFIL POR MEDIO RECOMENDADO (medianas) ===
+                   distancia_km  peso_kg  largo_cm  ancho_cm  alto_cm  volumen_l  valor_declarado_mxn  hora_salida
+medio_recomendado                                                                                                 
+bicicleta                  3.37     2.00      27.1      20.0     16.3       9.14               806.46         13.0
+dron                       9.32     1.05      21.3      16.0     13.0       4.64               795.29         13.0
+moto                      15.25     3.76      30.1      21.0     17.2      10.87               798.63         12.0
+camioneta                 17.68    15.02      44.0      32.3     26.9      36.99               811.95         13.0
+eskuter                    9.11     3.30      30.6      24.4     19.5      15.04               858.76         13.0
+
+Rangos (min - max) por medio:
+  distancia_km:
+                    min    max
+medio_recomendado             
+bicicleta          0.34   7.00
+dron               1.37  14.99
+moto               0.32  39.98
+camioneta          0.40  59.31
+eskuter            0.35  19.99
+  peso_kg:
+                   min    max
+medio_recomendado            
+bicicleta          0.1   7.99
+dron               0.1   2.50
+moto               0.1  24.99
+camioneta          0.1  80.00
+eskuter            0.1  11.92
+  volumen_l:
+                    min     max
+medio_recomendado              
+bicicleta          0.29   39.98
+dron               0.30   11.98
+moto               0.29   89.99
+camioneta          0.30  400.77
+eskuter            0.42   49.86
+
+Refrigerado -> medio:
+medio_recomendado  bicicleta  camioneta  dron  eskuter   moto
+refrigerado                                                  
+0                      10979       6265  5364     1616  29956
+1                          0       5820     0        0      0
+
+Zona rural -> medio:
+medio_recomendado  bicicleta  camioneta  dron  eskuter  moto
+zona_destino                                                
+centro                  6534       1679     0      410  4773
+periferia                137       3352  2033      516  9918
+residencial             4308       3492  3268      690  9101
+rural                      0       3562    63        0  6164
+
+Clima -> medio:
+medio_recomendado  bicicleta  camioneta  dron  eskuter   moto
+clima                                                        
+despejado               8999       6514  5364     1033  12648
+lluvia                   696       3759     0      583  12328
+viento_fuerte           1284       1812     0        0   4980

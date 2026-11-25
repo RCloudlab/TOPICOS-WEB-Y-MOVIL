@@ -1,0 +1,126 @@
+Modelo: modelo_medios.joblib  | clases que conoce: ['bicicleta', 'camioneta', 'dron', 'moto']
+
+===== envios1 =====
+Exactitud: 95.370%   | siempre 'camioneta': 25.000%
+              precision    recall  f1-score   support
+
+   bicicleta      0.845     1.000     0.916      2500
+   camioneta      1.000     1.000     1.000      2500
+        dron      0.999     0.819     0.900      2500
+        moto      1.000     0.996     0.998      2500
+
+    accuracy                          0.954     10000
+   macro avg      0.961     0.954     0.953     10000
+weighted avg      0.961     0.954     0.953     10000
+
+                pred_bicicleta  pred_camioneta  pred_dron  pred_moto
+real_bicicleta            2500               0          0          0
+real_camioneta               0            2500          0          0
+real_dron                  453               0       2047          0
+real_moto                    6               1          3       2490
+
+===== envios2 =====
+Exactitud: 77.660%   | siempre 'moto': 34.710%
+              precision    recall  f1-score   support
+
+   bicicleta      0.842     0.966     0.900      2616
+   camioneta      0.994     0.901     0.945      1442
+        dron      0.817     0.851     0.834       855
+     eskuter      0.000     0.000     0.000      1616
+        moto      0.669     0.925     0.776      3471
+
+    accuracy                          0.777     10000
+   macro avg      0.664     0.729     0.691     10000
+weighted avg      0.666     0.777     0.713     10000
+
+                pred_bicicleta  pred_camioneta  pred_dron  pred_eskuter  pred_moto
+real_bicicleta            2528               0          0             0         88
+real_camioneta              35            1299         12             0         96
+real_dron                  126               0        728             0          1
+real_eskuter               177               0         34             0       1405
+real_moto                  135               8        117             0       3211
+
+===== envios3 =====
+Exactitud: 94.490%   | siempre 'moto': 73.740%
+              precision    recall  f1-score   support
+
+   bicicleta      0.848     0.922     0.883       768
+   camioneta      0.994     0.854     0.919      1579
+        dron      0.628     0.921     0.747       279
+        moto      0.964     0.968     0.966      7374
+
+    accuracy                          0.945     10000
+   macro avg      0.859     0.916     0.879     10000
+weighted avg      0.951     0.945     0.946     10000
+
+                pred_bicicleta  pred_camioneta  pred_dron  pred_moto
+real_bicicleta             708               0          0         60
+real_camioneta              20            1348          7        204
+real_dron                   22               0        257          0
+real_moto                   85               8        145       7136
+
+===== envios4 =====
+Exactitud: 92.690%   | siempre 'moto': 57.250%
+              precision    recall  f1-score   support
+
+   bicicleta      0.879     0.929     0.903      1875
+   camioneta      0.989     0.863     0.922      1691
+        dron      0.804     0.874     0.838       709
+        moto      0.944     0.952     0.948      5725
+
+    accuracy                          0.927     10000
+   macro avg      0.904     0.904     0.903     10000
+weighted avg      0.929     0.927     0.927     10000
+
+                pred_bicicleta  pred_camioneta  pred_dron  pred_moto
+real_bicicleta            1741               0          0        134
+real_camioneta              30            1459         14        188
+real_dron                   87               0        620          2
+real_moto                  123              16        137       5449
+
+===== envios5 =====
+Exactitud: 92.520%   | siempre 'moto': 45.780%
+              precision    recall  f1-score   support
+
+   bicicleta      0.882     0.965     0.922      2796
+   camioneta      0.998     0.880     0.935      1678
+        dron      0.840     0.844     0.842       948
+        moto      0.949     0.934     0.941      4578
+
+    accuracy                          0.925     10000
+   macro avg      0.917     0.906     0.910     10000
+weighted avg      0.928     0.925     0.925     10000
+
+                pred_bicicleta  pred_camioneta  pred_dron  pred_moto
+real_bicicleta            2698               0          0         98
+real_camioneta              42            1477         25        134
+real_dron                  148               0        800          0
+real_moto                  171               3        127       4277
+
+===== envios6 =====
+Exactitud: 96.150%   | siempre 'moto': 63.080%
+              precision    recall  f1-score   support
+
+   bicicleta      0.851     0.851     0.851       424
+   camioneta      0.998     0.931     0.964      3195
+        dron      0.581     0.836     0.685        73
+        moto      0.958     0.986     0.972      6308
+
+    accuracy                          0.962     10000
+   macro avg      0.847     0.901     0.868     10000
+weighted avg      0.964     0.962     0.962     10000
+
+                pred_bicicleta  pred_camioneta  pred_dron  pred_moto
+real_bicicleta             361               0          0         63
+real_camioneta               9            2975          1        210
+real_dron                   12               0         61          0
+real_moto                   42               5         43       6218
+
+===== RESUMEN =====
+archivo    exactitud            mayoritaria
+envios1       95.37%        camioneta 25.0%
+envios2       77.66%             moto 34.7%
+envios3       94.49%             moto 73.7%
+envios4       92.69%             moto 57.2%
+envios5       92.52%             moto 45.8%
+envios6       96.15%             moto 63.1%

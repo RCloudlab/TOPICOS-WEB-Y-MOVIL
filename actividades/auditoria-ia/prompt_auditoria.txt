@@ -1,0 +1,21 @@
+Eres un auditor de software. Abajo está el código de KitAte: una tienda de artículos
+deportivos con backend Django + SQLite y una app Flutter que consume JSON. Un modelo de
+scikit-learn sugiere un nivel de actividad, unas reglas lo corrigen y se registra un pedido
+con folio. También hay un asistente (chat) que clasifica intenciones.
+
+Audita SOLO lo que aparece en el paquete. Busca problemas de seguridad, errores de lógica,
+validación, manejo de errores y configuración para producción.
+
+Responde en español con una lista numerada. Para cada hallazgo usa exactamente este formato:
+
+N. Título corto
+- Severidad: alta | media | baja
+- Archivo: ruta/del/archivo (y línea o función si la sabes)
+- Evidencia: el fragmento de código o configuración que lo muestra
+- Riesgo: qué puede pasar
+- Verificación de 5 minutos: cómo comprobarlo a mano
+
+Da entre 5 y 10 hallazgos. No inventes archivos que no estén en el paquete. Si algo no lo
+puedes confirmar con el código mostrado, dilo.
+
+===== PAQUETE DE CONTEXTO =====

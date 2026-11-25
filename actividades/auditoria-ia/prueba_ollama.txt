@@ -1,0 +1,4 @@
+$ curl http://localhost:11434/api/generate -d {"model":"llama3.2","prompt":"Responde solo: OK","stream":false}
+respuesta: ¿En qué puedo ayudarte hoy? | modelo: llama3.2
+$ git status --short
+(limpio)
